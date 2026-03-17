@@ -423,7 +423,7 @@ body {
 .pingpong-media img {
   display: block;
   width: 100%;
-  border-radius: 18px;
+  border-radius: 0;
 }
 
 .pingpong-media-stack {
