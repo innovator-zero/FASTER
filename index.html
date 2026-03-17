@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="FASTER: Rethinking Real-Time Flow VLAs">
+  <meta property="og:title" content="FASTER: Rethinking Real-Time Flow VLAs" />
+  <meta property="og:description"
+    content="FASTER is a simple yet effective framework for fast action sampling and immediate reaction in real-time flow-based VLAs." />
+  <meta property="og:url" content="https://innovator-zero.github.io/FASTER/" />
+  <meta property="og:image" content="static/images/teaser.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <meta name="twitter:title" content="FASTER: Rethinking Real-Time Flow VLAs">
+  <meta name="twitter:description"
+    content="FASTER is a simple yet effective framework for fast action sampling and immediate reaction in real-time flow-based VLAs.">
+  <meta name="twitter:image" content="static/images/teaser.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="keywords" content="FASTER, VLA, Vision-Language-Action, Real-Time, Flow Matching, Robotics">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>FASTER</title>
+  <link rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)'], ['$', '$']]
+      }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+
+<body>
+
+  <section class="hero hero-top">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 is-size-3-mobile publication-title">FASTER: Rethinking Real-Time Flow VLAs</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://innovator-zero.github.io/" target="_blank" rel="noopener noreferrer">Yuxiang
+                  Lu</a><sup>1,2</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://happinesslz.github.io/" target="_blank" rel="noopener noreferrer">Zhe
+                  Liu</a><sup>1,2</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=aNnPnfcAAAAJ&hl" target="_blank"
+                  rel="noopener noreferrer">Xianzhe
+                  Fan</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://huster-yzy.github.io/" target="_blank" rel="noopener noreferrer">Zhenya
+                  Yang</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=aoqtBAsAAAAJ&hl=en" target="_blank"
+                  rel="noopener noreferrer">Jinghua
+                  Hou</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://provencestar.github.io/" target="_blank" rel="noopener noreferrer">Junyi
+                  Li</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://kxding.github.io" target="_blank" rel="noopener noreferrer">Kaixin
+                  Ding</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://i.cs.hku.hk/~hszhao/" target="_blank" rel="noopener noreferrer">Hengshuang
+                  Zhao</a><sup>1,2</sup>
+              </span>
+            </div>
+
+            <div class="is-size-5 publication-authors publication-affiliations">
+              <span class="author-block"><sup>1</sup>The University of Hong Kong <sup>2</sup>ACE Robotics</span>
+            </div>
+
+            <div class="has-text-centered">
+              <div class="publication-links">
+                <!-- ArXiv abstract Link -->
+                <span class="link-block">
+                  <a href="" target="_blank" rel="noopener noreferrer"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+
+                <!-- Github link -->
+                <span class="link-block">
+                  <a href="https://github.com/innovator-zero/FASTER" target="_blank" rel="noopener noreferrer"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon github-icon" aria-hidden="true">
+                      <svg viewBox="0 0 16 16" width="1em" height="1em" fill="currentColor">
+                        <path
+                          d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.65 7.65 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" />
+                      </svg>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <div class="image-container teaser-image">
+          <img src="./static/images/teaser.png" alt="FASTER teaser" decoding="async"
+            style="width: 100%; height: auto; object-fit: contain;">
+        </div>
+        <h3 class="subtitle teaser-summary has-text-justified">
+          Real-time reaction in VLAs is constrained not only by inference latency, but
+          also by how action chunks are generated and executed. <b>FASTER</b> introduces a
+          new paradigm for fast action sampling under asynchronous execution. By
+          compressing the sampling process for immediate reaction into a single step,
+          FASTER achieves <b>10x acceleration</b> over &pi;<sub>0.5</sub> and X-VLA,
+          enabling real-time responsiveness in highly dynamic tasks such as table
+          tennis.
+        </h3>
+      </div>
+    </div>
+  </section>
+
+  <section class="section demo-section">
+    <div class="container is-max-desktop">
+      <div class="demo-video-card">
+        <video class="demo-video" controls playsinline preload="metadata">
+          <source src="./static/videos/demo.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <section class="section hero is-light abstract-section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths abstract-card">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Real-time execution is crucial for deploying Vision-Language-Action (VLA) models
+              in the physical world. Existing asynchronous inference methods primarily
+              optimize trajectory smoothness, but neglect the critical latency in reacting
+              to environmental changes. By rethinking the notion of reaction in action
+              chunking policies, this paper presents a systematic analysis of the factors governing
+              reaction time. We show that reaction time follows a uniform distribution
+              determined jointly by the Time to First Action (TTFA) and the execution
+              horizon. Moreover, we reveal that the standard practice of applying a
+              constant schedule in flow-based VLAs can be inefficient and forces the
+              system to complete all sampling steps before any movement can start, forming
+              the bottleneck in reaction latency. To overcome this issue, we propose <b>F</b>ast
+              <b>A</b>ction <b>S</b>ampling for Immedia<b>TE</b> <b>R</b>eaction (<b>FASTER</b>).
+              By introducing a Horizon-Aware Schedule, FASTER adaptively prioritizes near-term
+              actions during flow sampling, compressing the denoising of the immediate reaction
+              by tenfold (<i>e.g.</i>, in &pi;<sub>0.5</sub> and X-VLA) into a single step, while preserving
+              the quality of long-horizon trajectory. Coupled with a streaming client-server
+              pipeline, FASTER substantially reduces the effective reaction latency on real
+              robots, especially when deployed on consumer-grade GPUs. Real-world experiments,
+              including a highly dynamic table tennis task, prove that FASTER unlocks unprecedented
+              real-time responsiveness for generalist policies, enabling rapid generation
+              of accurate and smooth trajectories.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3">Why Current Real-Time VLAs Still React Slowly</h2>
+      <h3 class="subtitle is-4 section-subtitle-spaced">Temporal Pipelines of Sync and Async Inference</h3>
+      <div class="image-container figure-centered">
+        <img src="./static/images/pipeline.png" alt="Synchronous and asynchronous inference" loading="lazy"
+          decoding="async" style="width: 80%; height: auto; object-fit: contain;">
+      </div>
+      <div class="content has-text-justified section-copy">
+        <p>
+          In the conventional synchronous pipeline, the robot pauses until the
+          policy server completes inference, resulting in unavoidable execution gaps. In
+          contrast, the asynchronous pipeline allows the next inference request to be
+          launched before the current action chunk is fully executed, thereby eliminating
+          inter-chunk pauses and improving motion continuity. However, existing
+          asynchronous inference methods mainly focus on trajectory smoothness, while
+          overlooking another essential dimension of real-time embodied intelligence:
+          <b><i>reaction</i></b>.
+        </p>
+      </div>
+
+      <h3 class="subtitle is-4">Rethinking Reaction Capability</h3>
+      <div class="table-scroll" style="margin-top: 1rem;">
+        <table class="reaction-table">
+          <thead>
+            <tr>
+              <th class="divider-right"><span class="cell-center">Mode</span></th>
+              <th><span class="cell-center">Infer Interval</span></th>
+              <th><span class="cell-center">\(\Delta t_{\text{react}} \sim D_{\text{react}}\)</span></th>
+              <th><span class="cell-center">\(\mathbb{E}[\Delta t_{\text{react}}]\)</span></th>
+              <th><span class="cell-center">\(s_{\min}\)</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="divider-right"><span class="cell-center">Sync</span></td>
+              <td><span class="cell-center">\(\Delta t_{\text{infer}} + \Delta t_{\text{exec}}\)</span></td>
+              <td><span class="cell-center">\(\mathcal{U}\!\left(\Delta t_{\text{infer}}, 2 * \Delta t_{\text{infer}} + \Delta t_{\text{exec}}\right)\)</span></td>
+              <td><span class="cell-center">\(1.5 * \Delta t_{\text{infer}} + 0.5 * \Delta t_{\text{exec}}\)</span></td>
+              <td><span class="cell-center">\(1\)</span></td>
+            </tr>
+            <tr>
+              <td class="divider-right"><span class="cell-center">Async</span></td>
+              <td><span class="cell-center">\(\Delta t_{\text{exec}}\)</span></td>
+              <td><span class="cell-center">\(\mathcal{U}\!\left(\Delta t_{\text{infer}}, \Delta t_{\text{infer}} + \Delta t_{\text{exec}}\right)\)</span></td>
+              <td><span class="cell-center">\(\Delta t_{\text{infer}} + 0.5 * \Delta t_{\text{exec}}\)</span></td>
+              <td><span class="cell-center">\(\left\lceil \Delta t_{\text{infer}} / \Delta t_{\text{ctrl}} \right\rceil\)</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="content has-text-justified" style="margin-top: 1.5rem;">
+        <p>
+          We show that reaction time is not a trivial constant determined solely by
+          inference latency. Instead, it should be modeled as a random
+          variable following a uniform distribution, due to the stochastic timing of
+          external events relative to the robot controller. We further demonstrate that
+          existing asynchronous methods are inherently limited, and that truly
+          responsive behavior requires joint improvements in both perception-execution
+          latency and the frequency of the inference-execution cycle.
+        </p>
+      </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3">FASTER: Fast Action Sampling for Immediate Reaction</h2>
+      <h3 class="subtitle is-4 section-subtitle-spaced">Pilot Study on Action Sampling</h3>
+      <div class="columns is-multiline is-centered">
+        <div class="column is-full-mobile is-5-tablet is-5-desktop has-text-centered">
+          <img src="./static/images/stra.png" alt="Pilot study strategy" loading="lazy" decoding="async"
+            style="width: 80%; height: auto; object-fit: contain;">
+        </div>
+        <div class="column is-full-mobile is-5-tablet is-5-desktop has-text-centered">
+          <img src="./static/images/x0.png" alt="Pilot study visualization" loading="lazy" decoding="async"
+            style="width: 80%; height: auto; object-fit: contain;">
+        </div>
+      </div>
+      <div class="content has-text-justified">
+        <p>
+          Existing flow-based VLAs typically employ a constant timestep schedule over
+          the entire action chunk, allocating the same number of sampling steps to each
+          action. Under this design, the full multi-step denoising process must be
+          completed before any action can be executed, substantially increasing
+          reaction latency. However, the causal structure of physical interaction makes
+          near-term actions more strongly constrained by current observations, such
+          that they typically reside in a much narrower solution space. Our pilot
+          study validates this intuition: early actions exhibit straighter
+          interpolation trajectories and can recover accurate clean actions within only
+          a few sampling steps.
+        </p>
+      </div>
+      <div class="question-callout">
+        <p>
+          If earlier actions are easier to predict, can flow-based VLAs assign
+          fewer sampling steps to these latency-critical actions and thereby enable
+          immediate reaction?
+        </p>
+      </div>
+      <h3 class="subtitle is-4">Horizon-Aware Schedule</h3>
+      <div class="image-container figure-centered">
+        <img src="./static/images/HAS.png" alt="Horizon-aware schedule" loading="lazy" decoding="async"
+          style="width: 80%; height: auto; object-fit: contain;">
+      </div>
+      <div class="content has-text-justified section-copy">
+        <p>
+          FASTER introduces a Horizon-Aware Schedule (HAS) that prioritizes immediate
+          actions during flow sampling. Specifically, HAS allocates a more aggressive
+          sampling schedule to near-term actions while maintaining a slower schedule for
+          long-horizon ones. As a result, the model can produce the immediate action
+          with as little as one sampling step, without compromising long-horizon
+          trajectory quality.
+        </p>
+      </div>
+
+      <h3 class="subtitle is-4">Streaming Client-Server Interface</h3>
+      <div class="content has-text-justified section-copy">
+        <p>
+          Beyond algorithmic acceleration, FASTER further incorporates a streaming
+          client-server interface, through which early actions can be dispatched to the
+          robot controller as soon as they become available. While the robot
+          executes these initial actions, the VLA model continues refining subsequent
+          actions in parallel and progressively replenishes the client's action buffer.
+        </p>
+      </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3">Experiments</h2>
+      <h3 class="subtitle is-4 section-subtitle-spaced">Reaction Speed Analysis</h3>
+      <div class="table-scroll" style="margin-top: 1rem;">
+        <table class="metrics-table metrics-table-tab2">
+          <thead>
+            <tr>
+              <th rowspan="2"><span class="cell-center">Model</span></th>
+              <th rowspan="2" class="divider-right"><span class="cell-center">Method</span></th>
+              <th colspan="3" class="divider-right"><span class="cell-center">RTX 4090</span></th>
+              <th colspan="3"><span class="cell-center">RTX 4060</span></th>
+            </tr>
+            <tr>
+              <th><span class="cell-center">\( \mathrm{TTFA}\downarrow \)</span></th>
+              <th><span class="cell-center">\( s_{\min}\downarrow \)</span></th>
+              <th class="divider-right"><span class="cell-center">\( \mathbb{E}[\Delta t_{\text{react}}]\downarrow \)</span></th>
+              <th><span class="cell-center">\( \mathrm{TTFA}\downarrow \)</span></th>
+              <th><span class="cell-center">\( s_{\min}\downarrow \)</span></th>
+              <th><span class="cell-center">\( \mathbb{E}[\Delta t_{\text{react}}]\downarrow \)</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td rowspan="4"><span class="cell-center">&pi;<sub>0.5</span></td>
+              <td class="divider-right"><span class="cell-center">Sync</span></td>
+              <td><span class="cell-center">\(80.0_{\pm 1.6}\text{ms}\)</span></td>
+              <td><span class="cell-center">\(3\)</span></td>
+              <td class="divider-right"><span class="cell-center">\(170.0\text{ms}\)</span></td>
+              <td><span class="cell-center">\(303.3_{\pm 0.8}\text{ms}\)</span></td>
+              <td><span class="cell-center">\(10\)</span></td>
+              <td><span class="cell-center">\(621.6\text{ms}\)</span></td>
+            </tr>
+            <tr>
+              <td class="divider-right"><span class="cell-center">Async</span></td>
+              <td><span class="cell-center">\(80.0_{\pm 1.6}\text{ms}\)</span></td>
+              <td><span class="cell-center">\(3\)</span></td>
+              <td class="divider-right"><span class="cell-center">\(130.0\text{ms}\)</span></td>
+              <td><span class="cell-center">\(303.3_{\pm 0.8}\text{ms}\)</span></td>
+              <td><span class="cell-center">\(10\)</span></td>
+              <td><span class="cell-center">\(470.0\text{ms}\)</span></td>
+            </tr>
+            <tr>
+              <td class="divider-right"><span class="cell-center">FASTER</span></td>
+              <td><span class="cell-center"><strong>\(\mathbf{62.1}_{\pm 3.1}\text{ms}\)</strong></span></td>
+              <td><span class="cell-center">\(3\)</span></td>
+              <td class="divider-right"><span class="cell-center"><strong>\(\mathbf{112.1}\text{ms}\)</strong></span></td>
+              <td><span class="cell-center"><strong>\(\mathbf{238.6}_{\pm 1.9}\text{ms}\)</strong></span></td>
+              <td><span class="cell-center"><strong>\(\mathbf{8}\)</strong></span></td>
+              <td><span class="cell-center"><strong>\(\mathbf{371.9}\text{ms}\)</strong></span></td>
+            </tr>
+            <tr class="metrics-highlight-row">
+              <td class="divider-right"><span class="cell-center"><em>Speedup</em></span></td>
+              <td><span class="cell-center">\(\mathbf{1.29\times}\)</span></td>
+              <td><span class="cell-center">-</span></td>
+              <td class="divider-right"><span class="cell-center">\(\mathbf{1.16\times}\)</span></td>
+              <td><span class="cell-center">\(\mathbf{1.27\times}\)</span></td>
+              <td><span class="cell-center">\(\mathbf{1.25\times}\)</span></td>
+              <td><span class="cell-center">\(\mathbf{1.26\times}\)</span></td>
+            </tr>
+            <tr class="metrics-group-start">
+              <td rowspan="4"><span class="cell-center">X-VLA</span></td>
+              <td class="divider-right"><span class="cell-center">Sync</span></td>
+              <td><span class="cell-center">\(113.7_{\pm 0.8}\text{ms}\)</span></td>
+              <td><span class="cell-center">\(4\)</span></td>
+              <td class="divider-right"><span class="cell-center">\(237.2\text{ms}\)</span></td>
+              <td><span class="cell-center">\(399.5_{\pm 8.5}\text{ms}\)</span></td>
+              <td><span class="cell-center">\(12\)</span></td>
+              <td><span class="cell-center">\(799.2\text{ms}\)</span></td>
+            </tr>
+            <tr>
+              <td class="divider-right"><span class="cell-center">Async</span></td>
+              <td><span class="cell-center">\(113.7_{\pm 0.8}\text{ms}\)</span></td>
+              <td><span class="cell-center">\(4\)</span></td>
+              <td class="divider-right"><span class="cell-center">\(180.4\text{ms}\)</span></td>
+              <td><span class="cell-center">\(399.5_{\pm 8.5}\text{ms}\)</span></td>
+              <td><span class="cell-center">\(12\)</span></td>
+              <td><span class="cell-center">\(599.5\text{ms}\)</span></td>
+            </tr>
+            <tr>
+              <td class="divider-right"><span class="cell-center">FASTER</span></td>
+              <td><span class="cell-center"><strong>\(\mathbf{44.8}_{\pm 0.3}\text{ms}\)</strong></span></td>
+              <td><span class="cell-center"><strong>\(\mathbf{2}\)</strong></span></td>
+              <td class="divider-right"><span class="cell-center"><strong>\(\mathbf{78.1}\text{ms}\)</strong></span></td>
+              <td><span class="cell-center"><strong>\(\mathbf{129.2}_{\pm 2.4}\text{ms}\)</strong></span></td>
+              <td><span class="cell-center"><strong>\(\mathbf{6}\)</strong></span></td>
+              <td><span class="cell-center"><strong>\(\mathbf{229.2}\text{ms}\)</strong></span></td>
+            </tr>
+            <tr class="metrics-highlight-row">
+              <td class="divider-right"><span class="cell-center"><em>Speedup</em></span></td>
+              <td><span class="cell-center">\(\mathbf{2.54\times}\)</span></td>
+              <td><span class="cell-center">\(\mathbf{2\times}\)</span></td>
+              <td class="divider-right"><span class="cell-center">\(\mathbf{2.31\times}\)</span></td>
+              <td><span class="cell-center">\(\mathbf{3.09\times}\)</span></td>
+              <td><span class="cell-center">\(\mathbf{2\times}\)</span></td>
+              <td><span class="cell-center">\(\mathbf{2.62\times}\)</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="content has-text-justified section-copy">
+        <p>
+          FASTER delivers substantial improvements in reaction speed across all
+          scenarios, especially when deployed on consumer-grade GPUs. In particular,
+          it achieves a 3x reduction in Time to First Action (TTFA) on an RTX 4060,
+          highlighting
+          its practical advantage under resource-constrained deployment.
+        </p>
+      </div>
+
+      <h3 class="subtitle is-4">Playing Table Tennis</h3>
+      <div class="pingpong-media pingpong-media-stack">
+        <img src="./static/images/pingpong.png" alt="Ping pong evaluation" loading="lazy" decoding="async"
+          style="width: 100%; height: auto; object-fit: contain;">
+      </div>
+      <div class="pingpong-chart-card pingpong-chart-stack">
+        <div class="task-chart-toolbar pingpong-chart-toolbar">
+          <div class="task-chart-legend" aria-label="Methods">
+            <span class="task-legend-item">
+              <span class="task-legend-swatch task-method-sync"></span>
+              <span>Sync</span>
+            </span>
+            <span class="task-legend-item">
+              <span class="task-legend-swatch task-method-async"></span>
+              <span>Naive Async</span>
+            </span>
+            <span class="task-legend-item">
+              <span class="task-legend-swatch task-method-rtc"></span>
+              <span>Training-time RTC</span>
+            </span>
+            <span class="task-legend-item">
+              <span class="task-legend-swatch task-method-faster"></span>
+              <span>FASTER</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="task-chart-grid">
+          <div class="task-card pingpong-bar-card">
+            <div class="task-card-header task-card-header-left">
+              <h4 class="task-card-title">RTX 4090</h4>
+            </div>
+            <div class="task-plot">
+              <div class="task-y-axis pingpong-y-axis">
+                <span>1.0</span>
+                <span>0.8</span>
+                <span>0.6</span>
+                <span>0.4</span>
+                <span>0.2</span>
+                <span>0.0</span>
+              </div>
+              <div class="task-plot-area pingpong-plot-area">
+                <div class="task-bars pingpong-bars">
+                  <div class="task-bar-wrap">
+                    <div class="task-bar task-method-sync" style="height: 0%;" title="Sync: 0.00">
+                      <span class="task-bar-value">0.00</span>
+                    </div>
+                  </div>
+                  <div class="task-bar-wrap">
+                    <div class="task-bar task-method-async" style="height: 20%;" title="Naive Async: 0.20">
+                      <span class="task-bar-value">0.20</span>
+                    </div>
+                  </div>
+                  <div class="task-bar-wrap">
+                    <div class="task-bar task-method-rtc" style="height: 53%;" title="Training-time RTC: 0.53">
+                      <span class="task-bar-value">0.53</span>
+                    </div>
+                  </div>
+                  <div class="task-bar-wrap">
+                    <div class="task-bar task-method-faster" style="height: 80%;" title="FASTER: 0.80">
+                      <span class="task-bar-value">0.80</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="task-card pingpong-bar-card">
+            <div class="task-card-header task-card-header-left">
+              <h4 class="task-card-title">RTX 4060</h4>
+            </div>
+            <div class="task-plot">
+              <div class="task-y-axis pingpong-y-axis">
+                <span>1.0</span>
+                <span>0.8</span>
+                <span>0.6</span>
+                <span>0.4</span>
+                <span>0.2</span>
+                <span>0.0</span>
+              </div>
+              <div class="task-plot-area pingpong-plot-area">
+                <div class="task-bars pingpong-bars">
+                  <div class="task-bar-wrap">
+                    <div class="task-bar task-method-sync" style="height: 0%;" title="Sync: 0.00">
+                      <span class="task-bar-value">0.00</span>
+                    </div>
+                  </div>
+                  <div class="task-bar-wrap">
+                    <div class="task-bar task-method-async" style="height: 20%;" title="Naive Async: 0.20">
+                      <span class="task-bar-value">0.20</span>
+                    </div>
+                  </div>
+                  <div class="task-bar-wrap">
+                    <div class="task-bar task-method-rtc" style="height: 30%;" title="Training-time RTC: 0.30">
+                      <span class="task-bar-value">0.30</span>
+                    </div>
+                  </div>
+                  <div class="task-bar-wrap">
+                    <div class="task-bar task-method-faster" style="height: 47%;" title="FASTER: 0.47">
+                      <span class="task-bar-value">0.47</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content has-text-justified section-copy">
+        <p>
+          The table tennis task highlights the importance of immediate reaction under
+          fast dynamics. FASTER consistently tracks and responds more effectively than
+          the baselines across different GPU settings, demonstrating that faster
+          action sampling directly translates
+          into stronger real-world responsiveness. To the best of our knowledge,
+          <b>FASTER is the first method to enable a generalist VLA model to play table
+            tennis on an RTX 4060</b>.
+        </p>
+      </div>
+
+      <h3 class="subtitle is-4">Real-World Task Performance</h3>
+      <div class="task-chart" data-default-metric="score">
+        <div class="task-chart-toolbar">
+          <div class="task-chart-legend" aria-label="Methods">
+            <span class="task-legend-item">
+              <span class="task-legend-swatch task-method-sync"></span>
+              <span>Sync</span>
+            </span>
+            <span class="task-legend-item">
+              <span class="task-legend-swatch task-method-async"></span>
+              <span>Naive Async</span>
+            </span>
+            <span class="task-legend-item">
+              <span class="task-legend-swatch task-method-rtc"></span>
+              <span>Training-time RTC</span>
+            </span>
+            <span class="task-legend-item">
+              <span class="task-legend-swatch task-method-faster"></span>
+              <span>FASTER</span>
+            </span>
+          </div>
+          <div class="task-chart-toggle" role="tablist" aria-label="Task metric toggle">
+            <button class="task-toggle-button is-active" type="button" data-metric="score">Score</button>
+            <button class="task-toggle-button" type="button" data-metric="duration">Duration</button>
+          </div>
+        </div>
+        <div class="task-chart-panels">
+          <div class="task-chart-panel is-active" data-metric-panel="score">
+            <div class="task-chart-grid">
+              <div class="task-card task-card-score">
+                <div class="task-card-header task-card-header-left">
+                  <h4 class="task-card-title">Pick Beverage</h4>
+                </div>
+                <div class="task-plot">
+                  <div class="task-axis-label">Score</div>
+                  <div class="task-y-axis">
+                    <span>1.00</span>
+                    <span>0.95</span>
+                    <span>0.90</span>
+                    <span>0.85</span>
+                    <span>0.80</span>
+                    <span>0.75</span>
+                  </div>
+                  <div class="task-plot-area task-plot-score">
+                    <div class="task-bars task-bars-score">
+                      <div class="task-bar-wrap">
+                        <div class="task-bar task-method-sync" style="height: 51.6%;" title="Sync: 0.879">
+                          <span class="task-bar-value">0.879</span>
+                        </div>
+                      </div>
+                      <div class="task-bar-wrap">
+                        <div class="task-bar task-method-async" style="height: 82.8%;" title="Naive Async: 0.957">
+                          <span class="task-bar-value">0.957</span>
+                        </div>
+                      </div>
+                      <div class="task-bar-wrap">
+                        <div class="task-bar task-method-rtc" style="height: 80.0%;" title="Training-time RTC: 0.950">
+                          <span class="task-bar-value">0.950</span>
+                        </div>
+                      </div>
+                      <div class="task-bar-wrap">
+                        <div class="task-bar task-method-faster" style="height: 82.8%;" title="FASTER: 0.957">
+                          <span class="task-bar-value">0.957</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="task-card task-card-score">
+                <div class="task-card-header task-card-header-left">
+                  <h4 class="task-card-title">Fold Towel</h4>
+                </div>
+                <div class="task-plot">
+                  <div class="task-axis-label">Score</div>
+                  <div class="task-y-axis">
+                    <span>1.00</span>
+                    <span>0.95</span>
+                    <span>0.90</span>
+                    <span>0.85</span>
+                    <span>0.80</span>
+                    <span>0.75</span>
+                  </div>
+                  <div class="task-plot-area task-plot-score">
+                    <div class="task-bars task-bars-score">
+                      <div class="task-bar-wrap">
+                        <div class="task-bar task-method-sync" style="height: 15.2%;" title="Sync: 0.788">
+                          <span class="task-bar-value">0.788</span>
+                        </div>
+                      </div>
+                      <div class="task-bar-wrap">
+                        <div class="task-bar task-method-async" style="height: 30.0%;" title="Naive Async: 0.825">
+                          <span class="task-bar-value">0.825</span>
+                        </div>
+                      </div>
+                      <div class="task-bar-wrap">
+                        <div class="task-bar task-method-rtc" style="height: 55.2%;" title="Training-time RTC: 0.888">
+                          <span class="task-bar-value">0.888</span>
+                        </div>
+                      </div>
+                      <div class="task-bar-wrap">
+                        <div class="task-bar task-method-faster" style="height: 85.2%;" title="FASTER: 0.963">
+                          <span class="task-bar-value">0.963</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="task-chart-panel" data-metric-panel="duration">
+            <div class="task-chart-grid">
+              <div class="task-card task-card-duration">
+                <div class="task-card-header task-card-header-split">
+                  <h4 class="task-card-title">Pick Beverage</h4>
+                  <span class="task-card-unit">unit: s</span>
+                </div>
+                <div class="task-plot">
+                  <div class="task-axis-label">Duration (s)</div>
+                  <div class="task-y-axis">
+                    <span>25</span>
+                    <span>20</span>
+                    <span>15</span>
+                    <span>10</span>
+                    <span>5</span>
+                    <span>0</span>
+                  </div>
+                  <div class="task-plot-area task-plot-duration">
+                    <div class="task-bars task-bars-duration">
+                      <div class="task-bar-wrap">
+                        <div class="task-bar task-method-sync" style="height: 52.0%;" title="Sync: 13.0 s">
+                          <span class="task-bar-value">13.0</span>
+                        </div>
+                      </div>
+                      <div class="task-bar-wrap">
+                        <div class="task-bar task-method-async" style="height: 50.0%;" title="Naive Async: 12.5 s">
+                          <span class="task-bar-value">12.5</span>
+                        </div>
+                      </div>
+                      <div class="task-bar-wrap">
+                        <div class="task-bar task-method-rtc" style="height: 47.6%;" title="Training-time RTC: 11.9 s">
+                          <span class="task-bar-value">11.9</span>
+                        </div>
+                      </div>
+                      <div class="task-bar-wrap">
+                        <div class="task-bar task-method-faster" style="height: 48.0%;" title="FASTER: 12.0 s">
+                          <span class="task-bar-value">12.0</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="task-card task-card-duration">
+                <div class="task-card-header task-card-header-split">
+                  <h4 class="task-card-title">Fold Towel</h4>
+                  <span class="task-card-unit">unit: s</span>
+                </div>
+                <div class="task-plot">
+                  <div class="task-axis-label">Duration (s)</div>
+                  <div class="task-y-axis">
+                    <span>25</span>
+                    <span>20</span>
+                    <span>15</span>
+                    <span>10</span>
+                    <span>5</span>
+                    <span>0</span>
+                  </div>
+                  <div class="task-plot-area task-plot-duration">
+                    <div class="task-bars task-bars-duration">
+                      <div class="task-bar-wrap">
+                        <div class="task-bar task-method-sync" style="height: 98.8%;" title="Sync: 24.7 s">
+                          <span class="task-bar-value">24.7</span>
+                        </div>
+                      </div>
+                      <div class="task-bar-wrap">
+                        <div class="task-bar task-method-async" style="height: 96.0%;" title="Naive Async: 24.0 s">
+                          <span class="task-bar-value">24.0</span>
+                        </div>
+                      </div>
+                      <div class="task-bar-wrap">
+                        <div class="task-bar task-method-rtc" style="height: 82.8%;" title="Training-time RTC: 20.7 s">
+                          <span class="task-bar-value">20.7</span>
+                        </div>
+                      </div>
+                      <div class="task-bar-wrap">
+                        <div class="task-bar task-method-faster" style="height: 82.0%;" title="FASTER: 20.5 s">
+                          <span class="task-bar-value">20.5</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content has-text-justified section-copy">
+        <p>
+          On everyday tasks such as Pick Beverage and Fold Towel, FASTER achieves
+          better or comparable completion scores and rollout durations relative to the
+          baselines. These results highlight an important insight: task performance is
+          determined not only by action accuracy, but also by the quality of real-time
+          interaction with the physical world. Although accelerated sampling may
+          introduce slight degradation in action prediction, FASTER strikes a more
+          effective balance between responsiveness and accuracy.
+        </p>
+      </div>
+
+      <h3 class="subtitle is-4">Simulation Benchmarks</h3>
+      <div class="table-scroll" style="margin-top: 1rem;">
+        <table class="metrics-table metrics-table-tab4">
+          <thead>
+            <tr>
+              <th rowspan="2" class="divider-right"><span class="cell-center">Method</span></th>
+              <th colspan="5" class="divider-right"><span class="cell-center">LIBERO</span></th>
+              <th colspan="6"><span class="cell-center">CALVIN ABC&#8594;D</span></th>
+            </tr>
+            <tr>
+              <th><span class="cell-center">Spatial</span></th>
+              <th><span class="cell-center">Object</span></th>
+              <th><span class="cell-center">Goal</span></th>
+              <th><span class="cell-center">10</span></th>
+              <th class="divider-right"><span class="cell-center">Avg.</span></th>
+              <th><span class="cell-center">1</span></th>
+              <th><span class="cell-center">2</span></th>
+              <th><span class="cell-center">3</span></th>
+              <th><span class="cell-center">4</span></th>
+              <th><span class="cell-center">5</span></th>
+              <th><span class="cell-center">Avg. Len</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="divider-right"><span class="cell-center method-label"><span>&pi;<sub>0.5</sub></span></span></td>
+              <td><span class="cell-center">98.8</span></td>
+              <td><span class="cell-center">98.2</span></td>
+              <td><span class="cell-center">98.0</span></td>
+              <td><span class="cell-center">92.4</span></td>
+              <td class="divider-right"><span class="cell-center">96.9</span></td>
+              <td><span class="cell-center">94.2</span></td>
+              <td><span class="cell-center">88.7</span></td>
+              <td><span class="cell-center">85.7</span></td>
+              <td><span class="cell-center">83.2</span></td>
+              <td><span class="cell-center">79.5</span></td>
+              <td><span class="cell-center">4.313</span></td>
+            </tr>
+            <tr>
+              <td class="divider-right"><span class="cell-center method-label"><span>&pi;<sub>0.5</sub>+FASTER</span></span></td>
+              <td><span class="cell-center">98.6</span></td>
+              <td><span class="cell-center">97.8</span></td>
+              <td><span class="cell-center">97.8</span></td>
+              <td><span class="cell-center">91.6</span></td>
+              <td class="divider-right"><span class="cell-center">96.5</span></td>
+              <td><span class="cell-center">95.1</span></td>
+              <td><span class="cell-center">89.1</span></td>
+              <td><span class="cell-center">85.0</span></td>
+              <td><span class="cell-center">81.9</span></td>
+              <td><span class="cell-center">78.1</span></td>
+              <td><span class="cell-center">4.292</span></td>
+            </tr>
+            <tr class="metrics-group-start">
+              <td class="divider-right"><span class="cell-center method-label"><span>X-VLA</span></span></td>
+              <td><span class="cell-center">97.8</span></td>
+              <td><span class="cell-center">99.4</span></td>
+              <td><span class="cell-center">97.8</span></td>
+              <td><span class="cell-center">96.8</span></td>
+              <td class="divider-right"><span class="cell-center">98.0</span></td>
+              <td><span class="cell-center">95.7</span></td>
+              <td><span class="cell-center">89.8</span></td>
+              <td><span class="cell-center">82.4</span></td>
+              <td><span class="cell-center">77.0</span></td>
+              <td><span class="cell-center">70.2</span></td>
+              <td><span class="cell-center">4.151</span></td>
+            </tr>
+            <tr>
+              <td class="divider-right"><span class="cell-center method-label"><span>X-VLA+FASTER</span></span></td>
+              <td><span class="cell-center">99.0</span></td>
+              <td><span class="cell-center">99.2</span></td>
+              <td><span class="cell-center">97.6</span></td>
+              <td><span class="cell-center">92.0</span></td>
+              <td class="divider-right"><span class="cell-center">97.0</span></td>
+              <td><span class="cell-center">97.7</span></td>
+              <td><span class="cell-center">91.1</span></td>
+              <td><span class="cell-center">81.2</span></td>
+              <td><span class="cell-center">72.1</span></td>
+              <td><span class="cell-center">63.7</span></td>
+              <td><span class="cell-center">4.058</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="content has-text-justified" style="margin-top: 1.5rem;">
+        <p>
+          Although simulation benchmarks are not directly affected by inference latency,
+          they provide a useful testbed for measuring any capability loss introduced by
+          fast sampling. We find that FASTER preserves the original model
+          performance with only marginal degradation on both benchmarks, indicating
+          that HAS remains competitive despite its aggressive action-sampling strategy.
+        </p>
+      </div>
+  </section>
+
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">Citation</h2>
+      <pre><code></code></pre>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template"
+                target="_blank" rel="noopener noreferrer">Academic Project Page Template</a> which was adopted from
+              the <a href="https://nerfies.github.io" target="_blank" rel="noopener noreferrer">Nerfies</a> project
+              page.
+              <br> This website is licensed under a <a rel="license"
+                href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative
+                Commons
+                Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="static/js/index.js"></script>
+</body>
+
+</html>
