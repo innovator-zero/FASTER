@@ -140,6 +140,10 @@ body {
   justify-content: center;
 }
 
+.responsive-figure {
+  max-width: 100%;
+}
+
 .section-subtitle-spaced {
   margin-top: 2rem !important;
 }
@@ -630,6 +634,10 @@ body {
 
   .question-callout p {
     font-size: 1rem;
+  }
+
+  .responsive-figure {
+    width: 100% !important;
   }
 
   .reaction-table,
