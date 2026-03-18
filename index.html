@@ -426,9 +426,34 @@
       </div>
 
       <h3 class="subtitle is-4">Playing Table Tennis</h3>
-      <div class="pingpong-media pingpong-media-stack">
-        <img src="./static/images/pingpong.png" alt="Ping pong evaluation" loading="lazy" decoding="async"
-          style="width: 100%; height: auto; object-fit: contain;">
+      <div class="pingpong-media pingpong-media-stack media-carousel" data-carousel>
+        <div class="carousel-viewport">
+          <div class="carousel-track">
+            <div class="carousel-slide is-active">
+              <div class="pingpong-video-grid">
+                <div class="pingpong-video-item">
+                  <video class="pingpong-video" muted autoplay playsinline preload="metadata" loop>
+                    <source src="./static/videos/tt_0.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-slide">
+              <div class="pingpong-video-grid">
+                <div class="pingpong-video-item">
+                  <video class="pingpong-video" muted autoplay playsinline preload="metadata" loop>
+                    <source src="./static/videos/tt_1.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-note">Autonomous, RTX 4060, 0.2x</div>
+        <div class="carousel-controls" aria-label="Ping pong examples">
+          <button class="carousel-dot is-active" type="button" data-slide="0" aria-label="Show video set 1"></button>
+          <button class="carousel-dot" type="button" data-slide="1" aria-label="Show video set 2"></button>
+        </div>
       </div>
       <div class="pingpong-chart-card pingpong-chart-stack">
         <div class="task-chart-toolbar pingpong-chart-toolbar">
@@ -547,6 +572,45 @@
       </div>
 
       <h3 class="subtitle is-4">Real-World Task Performance</h3>
+      <div class="task-video-showcase media-carousel" data-carousel>
+        <div class="carousel-viewport">
+          <div class="carousel-track">
+            <div class="carousel-slide is-active">
+              <div class="task-video-group">
+                <div class="task-video-group-header">
+                  <h4 class="task-video-group-title">Pick Beverage</h4>
+                </div>
+                <div class="task-video-grid">
+                  <div class="task-video-card">
+                    <video class="task-showcase-video" muted autoplay playsinline preload="metadata" loop>
+                      <source src="./static/videos/beverage.mp4" type="video/mp4">
+                    </video>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-slide">
+              <div class="task-video-group">
+                <div class="task-video-group-header">
+                  <h4 class="task-video-group-title">Fold Towel</h4>
+                </div>
+                <div class="task-video-grid">
+                  <div class="task-video-card">
+                    <video class="task-showcase-video" muted autoplay playsinline preload="metadata" loop>
+                      <source src="./static/videos/towel.mp4" type="video/mp4">
+                    </video>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-note">Autonomous, RTX 4090, 1x</div>
+        <div class="carousel-controls" aria-label="Real-world task examples">
+          <button class="carousel-dot is-active" type="button" data-slide="0" aria-label="Show Pick Beverage videos"></button>
+          <button class="carousel-dot" type="button" data-slide="1" aria-label="Show Fold Towel videos"></button>
+        </div>
+      </div>
       <div class="task-chart" data-default-metric="score">
         <div class="task-chart-toolbar">
           <div class="task-chart-legend" aria-label="Methods">
