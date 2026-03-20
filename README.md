@@ -34,7 +34,11 @@
 
 Real-time reaction in VLAs is constrained not only by inference latency, but also by how action chunks are generated and executed. **FASTER** introduces a new paradigm for fast action sampling under asynchronous execution. By compressing the sampling process for immediate reaction into a single step, FASTER achieves **10x acceleration** over $\pi_{0.5}$ and X-VLA, enabling real-time responsiveness in highly dynamic tasks such as table tennis.
 
-[Demo](https://innovator-zero.github.io/FASTER/static/videos/demo.mp4)
+<img width="2960" height="836" alt="teaser" src="https://github.com/user-attachments/assets/121bf40a-20dc-41ff-bac0-c6d96edfb1c0" />
+
+[Demo](https://github.com/user-attachments/assets/c16bd3fa-48ac-4d1b-aef9-4b0f4d839011)
+
+
 
 ## ✨ Abstract
 Real-time execution is crucial for deploying Vision-Language-Action (VLA) models in the physical world. Existing asynchronous inference methods primarily optimize trajectory smoothness, but neglect the critical latency in reacting to environmental changes. By rethinking the notion of reaction in action chunking policies, this paper presents a systematic analysis of the factors governing reaction time. We show that reaction time follows a uniform distribution determined jointly by the Time to First Action (TTFA) and the execution horizon. Moreover, we reveal that the standard practice of applying a constant schedule in flow-based VLAs can be inefficient and forces the system to complete all sampling steps before any movement can start, forming the bottleneck in reaction latency. To overcome this issue, we propose **F**ast **A**ction **S**ampling for Immedia**TE** **R**eaction (**FASTER**). By introducing a Horizon-Aware Schedule, FASTER adaptively prioritizes near-term actions during flow sampling, compressing the denoising of the immediate reaction by tenfold (*e.g.*, in $\pi_{0.5}$ and X-VLA) into a single step, while preserving the quality of long-horizon trajectory. Coupled with a streaming client-server pipeline, FASTER substantially reduces the effective reaction latency on real robots, especially when deployed on consumer-grade GPUs. Real-world experiments, including a highly dynamic table tennis task, prove that FASTER unlocks unprecedented real-time responsiveness for generalist policies, enabling rapid generation of accurate and smooth trajectories.
