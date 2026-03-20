@@ -37,6 +37,38 @@
     };
   </script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <style>
+    .citation-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .copy-citation-button {
+      border: 1px solid #dbdbdb;
+      background: #fff;
+      color: #363636;
+      border-radius: 999px;
+      padding: 0.45rem 0.9rem;
+      font-size: 0.95rem;
+      line-height: 1;
+      cursor: pointer;
+      transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .copy-citation-button:hover {
+      background: #f5f5f5;
+      border-color: #b5b5b5;
+    }
+
+    .copy-citation-button.is-copied {
+      background: #48c78e;
+      border-color: #48c78e;
+      color: #fff;
+    }
+  </style>
 </head>
 
 <body>
@@ -925,14 +957,17 @@
 
   <section class="section" id="BibTeX">
     <div class="container is-max-desktop content">
-      <h2 class="title">Citation</h2>
-      <pre><code>
-      @article{lu2026faster,
-            title={FASTER: Rethinking Real-Time Flow VLAs}, 
-            author={Yuxiang Lu and Zhe Liu and Xianzhe Fan and Zhenya Yang and Jinghua Hou and Junyi Li and Kaixin Ding and Hengshuang Zhao},
-            year={2026},
-            journal={arXiv preprint arXiv:2603.19199},
-      }
+      <div class="citation-header">
+        <h2 class="title">Citation</h2>
+        <button class="copy-citation-button" type="button" data-copy-target="citation-bibtex">Copy</button>
+      </div>
+      <pre><code id="citation-bibtex">
+@article{lu2026faster,
+  title={FASTER: Rethinking Real-Time Flow VLAs}, 
+  author={Yuxiang Lu and Zhe Liu and Xianzhe Fan and Zhenya Yang and Jinghua Hou and Junyi Li and Kaixin Ding and Hengshuang Zhao},
+  year={2026},
+  journal={arXiv preprint arXiv:2603.19199}
+}
       </code></pre>
     </div>
   </section>
@@ -959,6 +994,59 @@
   </footer>
 
   <script src="static/js/index.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var copyButton = document.querySelector('[data-copy-target="citation-bibtex"]');
+      var citationBlock = document.getElementById('citation-bibtex');
+
+      if (!copyButton || !citationBlock) {
+        return;
+      }
+
+      var defaultLabel = 'Copy';
+      var copiedLabel = 'Copied!';
+      var resetTimer;
+
+      function updateButtonLabel(label, copied) {
+        copyButton.textContent = label;
+        copyButton.classList.toggle('is-copied', copied);
+      }
+
+      async function copyCitation() {
+        var citationText = citationBlock.textContent.replace(/^\s+|\s+$/g, '');
+
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(citationText);
+          } else {
+            var textArea = document.createElement('textarea');
+            textArea.value = citationText;
+            textArea.setAttribute('readonly', '');
+            textArea.style.position = 'absolute';
+            textArea.style.left = '-9999px';
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+          }
+
+          updateButtonLabel(copiedLabel, true);
+          window.clearTimeout(resetTimer);
+          resetTimer = window.setTimeout(function () {
+            updateButtonLabel(defaultLabel, false);
+          }, 1800);
+        } catch (error) {
+          updateButtonLabel('Failed', false);
+          window.clearTimeout(resetTimer);
+          resetTimer = window.setTimeout(function () {
+            updateButtonLabel(defaultLabel, false);
+          }, 1800);
+        }
+      }
+
+      copyButton.addEventListener('click', copyCitation);
+    });
+  </script>
 </body>
 
 </html>
