@@ -177,7 +177,7 @@
     <div class="container is-max-desktop">
       <div class="demo-video-card">
         <video class="demo-video" controls autoplay muted loop playsinline preload="metadata">
-          <source src="./static/videos/demo.mp4" type="video/mp4">
+          <source src="./static/videos/FASTER_Demo.mp4" type="video/mp4">
           Your browser does not support the video tag.
         </video>
       </div>
@@ -209,7 +209,7 @@
               the quality of long-horizon trajectory. Coupled with a streaming client-server
               pipeline, FASTER substantially reduces the effective reaction latency on real
               robots, especially when deployed on consumer-grade GPUs. Real-world experiments,
-              including a highly dynamic table tennis task, prove that FASTER unlocks unprecedented
+              including a highly dynamic table tennis task, prove that FASTER unlocks substantially improved
               real-time responsiveness for generalist policies, enabling rapid generation
               of accurate and smooth trajectories.
             </p>
@@ -259,7 +259,7 @@
               <td><span class="cell-center">\(\mathcal{U}\!\left(\Delta t_{\text{infer}}, 2 * \Delta t_{\text{infer}} +
                   \Delta t_{\text{exec}}\right)\)</span></td>
               <td><span class="cell-center">\(1.5 * \Delta t_{\text{infer}} + 0.5 * \Delta t_{\text{exec}}\)</span></td>
-              <td><span class="cell-center">\(1\)</span></td>
+              <td><span class="cell-center">\(-\)</span></td>
             </tr>
             <tr>
               <td class="divider-right"><span class="cell-center">Async</span></td>
@@ -857,103 +857,7 @@
           effective balance between responsiveness and accuracy.
         </p>
       </div>
-
-      <h3 class="subtitle is-4">Simulation Benchmarks</h3>
-      <div class="table-scroll" style="margin-top: 1rem;">
-        <table class="metrics-table metrics-table-tab4">
-          <thead>
-            <tr>
-              <th rowspan="2" class="divider-right"><span class="cell-center">Method</span></th>
-              <th colspan="5" class="divider-right"><span class="cell-center">LIBERO</span></th>
-              <th colspan="6"><span class="cell-center">CALVIN ABC&#8594;D</span></th>
-            </tr>
-            <tr>
-              <th><span class="cell-center">Spatial</span></th>
-              <th><span class="cell-center">Object</span></th>
-              <th><span class="cell-center">Goal</span></th>
-              <th><span class="cell-center">10</span></th>
-              <th class="divider-right"><span class="cell-center">Avg.</span></th>
-              <th><span class="cell-center">1</span></th>
-              <th><span class="cell-center">2</span></th>
-              <th><span class="cell-center">3</span></th>
-              <th><span class="cell-center">4</span></th>
-              <th><span class="cell-center">5</span></th>
-              <th><span class="cell-center">Avg. Len</span></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="divider-right"><span class="cell-center method-label"><span>&pi;<sub>0.5</sub></span></span>
-              </td>
-              <td><span class="cell-center">98.8</span></td>
-              <td><span class="cell-center">98.2</span></td>
-              <td><span class="cell-center">98.0</span></td>
-              <td><span class="cell-center">92.4</span></td>
-              <td class="divider-right"><span class="cell-center">96.9</span></td>
-              <td><span class="cell-center">94.2</span></td>
-              <td><span class="cell-center">88.7</span></td>
-              <td><span class="cell-center">85.7</span></td>
-              <td><span class="cell-center">83.2</span></td>
-              <td><span class="cell-center">79.5</span></td>
-              <td><span class="cell-center">4.313</span></td>
-            </tr>
-            <tr>
-              <td class="divider-right"><span
-                  class="cell-center method-label"><span>&pi;<sub>0.5</sub>+FASTER</span></span></td>
-              <td><span class="cell-center">98.6</span></td>
-              <td><span class="cell-center">97.8</span></td>
-              <td><span class="cell-center">97.8</span></td>
-              <td><span class="cell-center">91.6</span></td>
-              <td class="divider-right"><span class="cell-center">96.5</span></td>
-              <td><span class="cell-center">95.1</span></td>
-              <td><span class="cell-center">89.1</span></td>
-              <td><span class="cell-center">85.0</span></td>
-              <td><span class="cell-center">81.9</span></td>
-              <td><span class="cell-center">78.1</span></td>
-              <td><span class="cell-center">4.292</span></td>
-            </tr>
-            <tr class="metrics-group-start">
-              <td class="divider-right"><span class="cell-center method-label"><span>X-VLA</span></span></td>
-              <td><span class="cell-center">97.8</span></td>
-              <td><span class="cell-center">99.4</span></td>
-              <td><span class="cell-center">97.8</span></td>
-              <td><span class="cell-center">96.8</span></td>
-              <td class="divider-right"><span class="cell-center">98.0</span></td>
-              <td><span class="cell-center">95.7</span></td>
-              <td><span class="cell-center">89.8</span></td>
-              <td><span class="cell-center">82.4</span></td>
-              <td><span class="cell-center">77.0</span></td>
-              <td><span class="cell-center">70.2</span></td>
-              <td><span class="cell-center">4.151</span></td>
-            </tr>
-            <tr>
-              <td class="divider-right"><span class="cell-center method-label"><span>X-VLA+FASTER</span></span></td>
-              <td><span class="cell-center">99.0</span></td>
-              <td><span class="cell-center">99.2</span></td>
-              <td><span class="cell-center">97.6</span></td>
-              <td><span class="cell-center">92.0</span></td>
-              <td class="divider-right"><span class="cell-center">97.0</span></td>
-              <td><span class="cell-center">97.7</span></td>
-              <td><span class="cell-center">91.1</span></td>
-              <td><span class="cell-center">81.2</span></td>
-              <td><span class="cell-center">72.1</span></td>
-              <td><span class="cell-center">63.7</span></td>
-              <td><span class="cell-center">4.058</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="content has-text-justified" style="margin-top: 1.5rem;">
-        <p>
-          Although simulation benchmarks are not directly affected by inference latency,
-          they provide a useful testbed for measuring any capability loss introduced by
-          fast sampling. We find that FASTER preserves the original model
-          performance with only marginal degradation on both benchmarks, indicating
-          that HAS remains competitive despite its aggressive action-sampling strategy.
-        </p>
-      </div>
-  </section>
-
+           
   <section class="section" id="BibTeX">
     <div class="container is-max-desktop content">
       <div class="citation-header">
