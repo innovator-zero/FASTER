@@ -3,7 +3,7 @@
   <p align="center">
     <strong><a href="https://innovator-zero.github.io/">Yuxiang Lu</a><sup>1,2</sup></strong>
     &nbsp;&nbsp;
-    <strong><a href="https://happinesslz.github.io/">Zhe Liu</a><sup>1,2</sup></strong>
+    <strong><a href="https://happinesslz.github.io/">Zhe Liu</a><sup>1</sup></strong>
     &nbsp;&nbsp;
     <strong><a href="https://www.linkedin.com/in/xianzhefan">Xianzhe Fan</a><sup>1</sup></strong>
     &nbsp;&nbsp;
@@ -11,11 +11,12 @@
     &nbsp;&nbsp;
     <strong><a href="https://scholar.google.com/citations?user=aoqtBAsAAAAJ&hl=en">Jinghua Hou</a><sup>1</sup></strong>
     &nbsp;&nbsp;
+    <br>
     <strong><a href="https://provencestar.github.io/">Junyi Li</a><sup>1</sup></strong>
     &nbsp;&nbsp;
     <strong><a href="https://kxding.github.io">Kaixin Ding</a><sup>1</sup></strong>
     &nbsp;&nbsp;
-    <strong><a href="https://i.cs.hku.hk/~hszhao/">Hengshuang Zhao</a><sup>1,2</sup></strong>
+    <strong><a href="https://i.cs.hku.hk/~hszhao/">Hengshuang Zhao</a><sup>1</sup></strong>
   </p>
 
   <p align="center">
